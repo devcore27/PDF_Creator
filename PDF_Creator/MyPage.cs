@@ -77,6 +77,9 @@ namespace PDF_Creator
 
             // Handle PrintTask.Completed to catch failed print jobs
             printTask.Completed += PrintTaskCompleted;
+
+            printTask.Options.Orientation = PrintOrientation.Landscape;
+            printTask.Options.MediaSize = PrintMediaSize.IsoA4;
         }
 
         private void PrintTaskSourceRequrested(PrintTaskSourceRequestedArgs args)
