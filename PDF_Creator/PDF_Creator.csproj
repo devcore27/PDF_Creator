@@ -99,6 +99,10 @@
     <Compile Include="ContentDialog1.xaml.cs">
       <DependentUpon>ContentDialog1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataManager.cs" />
+    <Compile Include="FileManager.cs" />
+    <Compile Include="Klasse.cs" />
+    <Compile Include="MyPage.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

@@ -81,7 +81,10 @@ namespace PDF_Creator
             //this.Frame.Navigate(typeof(PreviewPage), null);
             
         }
-    
 
+        private void BTN_open_Click(object sender, RoutedEventArgs e)
+        {
+            FileManager.readCSV();
+        }
     }
 }
