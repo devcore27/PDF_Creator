@@ -66,7 +66,7 @@
             <Viewbox  Grid.Column="1" Grid.Row="0" Margin="15,15,15,0">
                 <StackPanel>
                     <TextBlock Height="50" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" FontSize="12" FontWeight="Bold" Text="Herzlichen Glückwunsch &#x0a; vom Lehrerkollegium &#x0a; des Beruflichen Schulzentrums für Technik I"/>
-                    <Image  Source="Assets/isLogo.png" Height="50" Margin="0,10,0,0"/>
+                    <Image x:Name="IMG_logo" Source="Assets/isLogo.png" Height="50" Margin="0,10,0,0"/>
                     <TextBlock Text="zum" HorizontalAlignment="Left" Margin="0,0,0,0" FontWeight="Bold"/>
                     <TextBlock  Text="Berufsabschluss" FontSize="26" HorizontalAlignment="Center" FontWeight="Bold"/>
                 </StackPanel>
