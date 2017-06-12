@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Popups;
@@ -11,6 +12,7 @@ namespace PDF_Creator
     {
         public async static void readCSV()
         {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.List;
             openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
@@ -19,6 +21,7 @@ namespace PDF_Creator
             StorageFile file = await openPicker.PickSingleFileAsync();
             if (file != null)
             {
+                localSettings.Values["is_csv_file_selectet"] = "true";
                 try
                 {
                     using (var inputStream = await file.OpenReadAsync())
