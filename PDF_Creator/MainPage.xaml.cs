@@ -8,6 +8,8 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.System.Threading;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,14 +28,34 @@ namespace PDF_Creator
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
         public MainPage()
         {
             this.InitializeComponent();
         }
 
-        private void BTN_change_school_Click(object sender, RoutedEventArgs e)
+        private async void BTN_change_school_Click(object sender, RoutedEventArgs e)
         {
-           // IMG_school.Source  = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/StoreLogo.png", UriKind.Absolute) };
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".png");
+
+            Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
+
+            if (file != null)
+            {
+                // Application now has read/write access to the picked file
+                BitmapImage img = new BitmapImage();
+                img = await LoadImage(file);
+                IMG_class.Source = img;
+            }
+            else
+            {
+            }
         }
 
         private async void BTN_school_source_Click(object sender, RoutedEventArgs e)
@@ -45,11 +67,8 @@ namespace PDF_Creator
             picker.FileTypeFilter.Add(".jpeg");
             picker.FileTypeFilter.Add(".png");
 
-            
             Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
 
-            
-            
             if (file != null)
             {
                 // Application now has read/write access to the picked file
@@ -73,18 +92,14 @@ namespace PDF_Creator
 
         }
 
-        private async void BTN_preview_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialog1 cdm = new ContentDialog1();
-            //cdm.SecondaryButtonClick += navigate_to_settings;
-            await cdm.ShowAsync();
-            //this.Frame.Navigate(typeof(PreviewPage), null);
-            
-        }
+
 
         private void BTN_open_Click(object sender, RoutedEventArgs e)
         {
             FileManager.readCSV();
+
+            BTN_print.Visibility = Visibility.Visible;
+            BTN_save.Visibility = Visibility.Visible;
         }
     }
 }
