@@ -71,6 +71,18 @@ namespace PDF_Creator
                 // Sicherstellen, dass das aktuelle Fenster aktiv ist
                 Window.Current.Activate();
             }
+
+            EnteredBackground += new EnteredBackgroundEventHandler(delegate (Object o, EnteredBackgroundEventArgs a)
+            {
+                DataManager.Instance.saveSettings();
+            });
+
+            LeavingBackground += new LeavingBackgroundEventHandler(delegate (Object o, LeavingBackgroundEventArgs a)
+            {
+                DataManager.Instance.loadSettings();
+            });
+
+
         }
 
         /// <summary>
