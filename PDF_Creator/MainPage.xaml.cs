@@ -41,14 +41,8 @@ namespace PDF_Creator
                     await Dispatcher.RunAsync(CoreDispatcherPriority.High,
                         () =>
                         {
-
                             myPage.Width = Window.Current.Bounds.Width;
                             grid_main.Width = Window.Current.Bounds.Width;
-                            Klasse klasse = DataManager.Instance.Klasse;
-                            if(klasse != null)
-                            {
-                                generateKlass();
-                            }
                         }
                         );
                 },
@@ -182,6 +176,7 @@ namespace PDF_Creator
             {
                 BTN_print.Visibility = Visibility.Visible;
                 BTN_save.Visibility = Visibility.Visible;
+                generateKlass();
             }
             else
             {
