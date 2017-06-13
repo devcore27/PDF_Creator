@@ -74,6 +74,23 @@ namespace PDF_Creator
                 Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
                 Window.Current.Activate();
             }
+
+            EnteredBackground += new EnteredBackgroundEventHandler(delegate (Object o, EnteredBackgroundEventArgs a)
+            {
+                DataManager.Instance.saveSettings();
+            });
+
+            LeavingBackground += new LeavingBackgroundEventHandler(delegate (Object o, LeavingBackgroundEventArgs a)
+            {
+                DataManager.Instance.loadSettings();
+            });
+
+            DataManager.Instance.Changed += new DataManager.OnKlasseChangedListener(delegate (Klasse k)
+            {
+                var frame = (Frame)Window.Current.Content;
+                var page = (MainPage)frame.Content;
+                page.klasse_Changed(k);
+            });
         }
 
         /// <summary>

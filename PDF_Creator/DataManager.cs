@@ -8,18 +8,20 @@ namespace PDF_Creator
 {
     class DataManager
     {
+        private static string KLASSE_SETTINGS_KEY = "klasse_saved";
+
         public delegate void OnKlasseChangedListener(Klasse klasse);
 
         private static DataManager instance;
         private Klasse klasse = null;
-        private event OnKlasseChangedListener Changed;
+
+        public event OnKlasseChangedListener Changed;
 
         private DataManager() { }
 
         protected virtual void OnChanged(Klasse klasse)
         {
-            if (Changed != null)
-                Changed(klasse);
+            Changed?.Invoke(klasse);
         }
 
         public Klasse Klasse
@@ -45,6 +47,35 @@ namespace PDF_Creator
                     instance = new DataManager();
                 }
                 return instance;
+            }
+        }
+
+        public bool isEmpty() { return klasse == null;  }
+
+        public void saveSettings()
+        {
+            String klasseAsString = null;
+            if (!isEmpty())
+            {
+                klasseAsString = klasse.Name + '\t' + klasse.Leiter;
+                foreach (string student in klasse.Students)
+                    klasseAsString += '\t' + student;
+            }
+
+            Windows.Storage.ApplicationDataContainer localSettings =
+                Windows.Storage.ApplicationData.Current.LocalSettings;
+            localSettings.Values[KLASSE_SETTINGS_KEY] = klasseAsString;
+        }
+
+        public void loadSettings()
+        {
+            Windows.Storage.ApplicationDataContainer localSettings =
+                Windows.Storage.ApplicationData.Current.LocalSettings;
+            String klasseAsString = (String) localSettings.Values[KLASSE_SETTINGS_KEY];
+
+            if (klasseAsString != null)
+            {                
+                Klasse = new Klasse(klasseAsString.Split('\t'));
             }
         }
     }

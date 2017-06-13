@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,8 +33,7 @@ namespace PDF_Creator
 
         public MainPage()
         {
-            this.InitializeComponent();
-         
+            this.InitializeComponent();         
             TimeSpan tperiod = TimeSpan.FromSeconds(0.1);
             ThreadPoolTimer tTimer = ThreadPoolTimer.CreatePeriodicTimer(
                 async (source) =>
@@ -42,6 +41,7 @@ namespace PDF_Creator
                     await Dispatcher.RunAsync(CoreDispatcherPriority.High,
                         () =>
                         {
+
                             myPage.Width = Window.Current.Bounds.Width;
                             grid_main.Width = Window.Current.Bounds.Width;
                             Klasse klasse = DataManager.Instance.Klasse;
@@ -166,14 +166,25 @@ namespace PDF_Creator
 
         }
 
+        
+        private void BTN_open_Click(object sender, RoutedEventArgs e)
 
-
-        private async void BTN_open_Click(object sender, RoutedEventArgs e)
         {
-            FileManager.readCSV();
+            FileManager.readCSV();            
+        }
 
-            BTN_print.Visibility = Visibility.Visible;
-            BTN_save.Visibility = Visibility.Visible;
+        public void klasse_Changed(Klasse klasse)
+        {
+            if (klasse != null)
+            {
+                BTN_print.Visibility = Visibility.Visible;
+                BTN_save.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BTN_print.Visibility = Visibility.Collapsed;
+                BTN_save.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

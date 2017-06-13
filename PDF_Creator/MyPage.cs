@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Printing;
 using Windows.UI;
@@ -69,7 +69,7 @@ namespace PDF_Creator
                     ContentDialog noPrintingDialog = new ContentDialog()
                     {
                         Title = "Printing error",
-                        Content = "\nSorry, printing can' t proceed at this time.",
+                        Content = "\nSorry, printing can't proceed at this time.",
                         PrimaryButtonText = "OK"
                     };
                     await noPrintingDialog.ShowAsync();
