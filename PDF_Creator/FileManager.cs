@@ -28,13 +28,12 @@ namespace PDF_Creator
                     using (var readStream = inputStream.AsStreamForRead())
                     using (var reader = new StreamReader(readStream))
                     {
-                        string name = reader.ReadLine();
-                        string leiter = reader.ReadLine();
-                        DataManager.Instance.Klasse = new Klasse(name, leiter);
+                        List<string> data = new List<string>();                                                
                         while (!reader.EndOfStream)
                         {
-                            DataManager.Instance.Klasse.addStudent(reader.ReadLine());
+                            data.Add(reader.ReadLine());
                         }
+                        DataManager.Instance.Klasse = new Klasse(data.ToArray());
                     }
                 }
                 catch (Exception ex)

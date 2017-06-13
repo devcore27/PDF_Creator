@@ -71,6 +71,13 @@ namespace PDF_Creator
                 // Sicherstellen, dass das aktuelle Fenster aktiv ist
                 Window.Current.Activate();
             }
+
+            DataManager.Instance.Changed += new DataManager.OnKlasseChangedListener(delegate (Klasse k)
+            {
+                var frame = (Frame)Window.Current.Content;
+                var page = (MainPage)frame.Content;
+                page.klasse_Changed(k);
+            });
         }
 
         /// <summary>

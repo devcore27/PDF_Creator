@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PDF_Creator
 {
-    class Klasse
+    public class Klasse
     {
         private string name;
         private string leiter;
@@ -16,6 +16,16 @@ namespace PDF_Creator
         {
             this.name = name;
             this.leiter = leiter;
+        }
+
+        public Klasse (params string[] list)
+        {
+            name = list[0];
+            leiter = list[1];
+            for (int i = 2; i != list.Length; ++i)
+            {
+                addStudent(list[i]);
+            }
         }
 
         public string Name
