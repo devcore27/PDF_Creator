@@ -41,7 +41,7 @@ namespace PDF_Creator
                 {
                     var dialog = new MessageDialog("Error: Could not read file from disk. Original error: " + ex.Message); await dialog.ShowAsync();
                 }
-            }            
+            }
         }
 
         public async static void writeCSV()

@@ -66,7 +66,7 @@ namespace PDF_Creator
                     ContentDialog noPrintingDialog = new ContentDialog()
                     {
                         Title = "Printing error",
-                        Content = "\nSorry, printing can' t proceed at this time.",
+                        Content = "\nSorry, printing can't proceed at this time.",
                         PrimaryButtonText = "OK"
                     };
                     await noPrintingDialog.ShowAsync();
@@ -268,6 +268,7 @@ namespace PDF_Creator
             klassenFoto.Height = GRID_ROW_HEIGHT;
             klassenFoto.HorizontalAlignment = HorizontalAlignment.Center;
             klassenFoto.VerticalAlignment = VerticalAlignment.Center;
+            klassenFoto.Margin = new Thickness(DEFAULT_PADDING, 0, 0, 0);
 
             grid.Children.Add(schoolImg);
             grid.Children.Add(logoStack);
@@ -282,7 +283,7 @@ namespace PDF_Creator
             Grid.SetColumn(klassenFoto, 1);
             Grid.SetRow(klassenFoto, 1);
 
-            grid.Padding = new Thickness(PAGE_PADDING, PAGE_PADDING, PAGE_PADDING, PAGE_PADDING);
+            grid.Padding = new Thickness(PAGE_PADDING);
         }
 
         #endregion
