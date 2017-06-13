@@ -74,14 +74,8 @@ namespace PDF_Creator
             String klasseAsString = (String) localSettings.Values[KLASSE_SETTINGS_KEY];
 
             if (klasseAsString != null)
-            {
-                string[] data = klasseAsString.Split('\t');
-                klasse = new Klasse(data[0], data[1]);
-
-                for (int i = 2; i < data.Length; ++i)
-                {
-                    klasse.addStudent(data[i]);
-                }
+            {                
+                Klasse = new Klasse(klasseAsString.Split('\t'));
             }
         }
     }
