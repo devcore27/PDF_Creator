@@ -1,12 +1,15 @@
 ﻿using System;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Printing;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Printing;
+using Windows.UI.Xaml.Shapes;
 
 namespace PDF_Creator
 {
@@ -28,7 +31,7 @@ namespace PDF_Creator
         private PrintDocument printDoc;
         private IPrintDocumentSource printDocSource;
         private Grid grid;
-        
+
         #region Register for printing
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -118,7 +121,26 @@ namespace PDF_Creator
         {
             // Provide a UIElement as the print preview.
             this.Width = GRID_WIDTH;
-            printDoc.SetPreviewPage(e.PageNumber, grid);
+            try
+            {
+                printDoc.SetPreviewPage(e.PageNumber, grid);
+            }catch
+            {
+                showCD();
+            }
+
+
+        }
+
+        private async void showCD()
+        {
+            ContentDialog noPrintingDialog = new ContentDialog()
+            {
+                Title = "Dokument cann ncot size error",
+                Content = "\nSorry, can not reach size.",
+                PrimaryButtonText = "OK"
+            };
+            await noPrintingDialog.ShowAsync();
         }
 
         #endregion
@@ -162,48 +184,35 @@ namespace PDF_Creator
         private void initPage()
         {
             grid = new Grid();
+            RelativePanel rp = new RelativePanel();
 
-            // Create column definitions.
-            ColumnDefinition columnDefinition1 = new ColumnDefinition();
-            ColumnDefinition columnDefinition2 = new ColumnDefinition();
-            columnDefinition1.Width = new GridLength(GRID_LEFT_COL_WIDTH);
-            columnDefinition2.Width = new GridLength(GRID_RIGHT_COL_WIDTH);
-
-            // Create row definitions.
-            RowDefinition rowDefinition1 = new RowDefinition();
-            RowDefinition rowDefinition2 = new RowDefinition();
-            rowDefinition1.Height = new GridLength(GRID_ROW_HEIGHT);
-            rowDefinition2.Height = new GridLength(GRID_ROW_HEIGHT);
-
-            // Attach definitions to grid.
-            grid.ColumnDefinitions.Add(columnDefinition1);
-            grid.ColumnDefinitions.Add(columnDefinition2);
-            grid.RowDefinitions.Add(rowDefinition1);
-            grid.RowDefinitions.Add(rowDefinition2);
 
             Image schoolImg = new Image();
             schoolImg.Source = IMG_school.Source;
-            schoolImg.Height = GRID_ROW_HEIGHT - 2 * DEFAULT_PADDING;            
-            schoolImg.HorizontalAlignment = HorizontalAlignment.Center;
-            schoolImg.VerticalAlignment = VerticalAlignment.Center;
+            schoolImg.HorizontalAlignment = HorizontalAlignment.Stretch;
+            schoolImg.VerticalAlignment = VerticalAlignment.Stretch;
 
             StackPanel logoStack = new StackPanel();
             logoStack.Orientation = Orientation.Vertical;
-            logoStack.HorizontalAlignment = HorizontalAlignment.Center;
-            logoStack.VerticalAlignment = VerticalAlignment.Center;
+            //logoStack.HorizontalAlignment = HorizontalAlignment.Center;
+            //logoStack.VerticalAlignment = VerticalAlignment.Center;
+
             TextBlock congratsText = new TextBlock();
             congratsText.Text = "Herzlichen Glückwunsch\nvom Lehrerkollegium\ndes Beruflichen Schulzentrums für Technik I";
             congratsText.HorizontalAlignment = HorizontalAlignment.Center;
             congratsText.TextAlignment = TextAlignment.Center;
             congratsText.FontSize = 22;
             congratsText.FontWeight = FontWeights.Bold;
+
             Image logoImg = new Image();
             logoImg.Source = IMG_logo.Source;
-            logoImg.Height = 140;            
+            logoImg.Height = 150;
+
             TextBlock zumText = new TextBlock();
             zumText.Text = "zum";
             zumText.FontSize = 26;
             zumText.FontWeight = FontWeights.Bold;
+
             TextBlock causeText = new TextBlock();
             causeText.Text = "Berufsabschluss";
             causeText.FontSize = 40;
@@ -213,6 +222,7 @@ namespace PDF_Creator
             logoStack.Children.Add(logoImg);
             logoStack.Children.Add(zumText);
             logoStack.Children.Add(causeText);
+
 
             Grid klassenGrid = new Grid();
             klassenGrid.HorizontalAlignment = HorizontalAlignment.Center;
@@ -266,23 +276,55 @@ namespace PDF_Creator
             Image klassenFoto = new Image();
             klassenFoto.Source = IMG_class.Source;
             klassenFoto.Height = GRID_ROW_HEIGHT;
-            klassenFoto.HorizontalAlignment = HorizontalAlignment.Center;
-            klassenFoto.VerticalAlignment = VerticalAlignment.Center;
+            //klassenFoto.HorizontalAlignment = HorizontalAlignment.Center;
+            //klassenFoto.VerticalAlignment = VerticalAlignment.Center;
 
-            grid.Children.Add(schoolImg);
-            grid.Children.Add(logoStack);
-            grid.Children.Add(klassenGrid);
-            grid.Children.Add(klassenFoto);
-            Grid.SetColumn(schoolImg, 0);
-            Grid.SetRow(schoolImg, 0);
-            Grid.SetColumn(logoStack, 1);
-            Grid.SetRow(logoStack, 0);
-            Grid.SetColumn(klassenGrid, 0);
-            Grid.SetRow(klassenGrid, 1);
-            Grid.SetColumn(klassenFoto, 1);
-            Grid.SetRow(klassenFoto, 1);
+            Rectangle rect = new Rectangle();
+            rect.SetValue(RelativePanel.AlignTopWithPanelProperty, true);
+            rect.SetValue(RelativePanel.AlignBottomWithPanelProperty, true);
+            rect.SetValue(RelativePanel.LeftOfProperty, logoStack);
+            rect.SetValue(RelativePanel.RightOfProperty, schoolImg);
+            rect.SetValue(RelativePanel.LeftOfProperty, klassenFoto);
+            rect.SetValue(RelativePanel.RightOfProperty, klassenGrid);
+            rect.Width = 30;
 
-            grid.Padding = new Thickness(PAGE_PADDING, PAGE_PADDING, PAGE_PADDING, PAGE_PADDING);
+            schoolImg.SetValue(RelativePanel.AlignLeftWithPanelProperty, true);
+            schoolImg.SetValue(RelativePanel.AlignTopWithPanelProperty, true);
+            schoolImg.SetValue(RelativePanel.AlignTopWithProperty, logoStack);
+            schoolImg.SetValue(RelativePanel.AlignBottomWithProperty, klassenFoto);
+            schoolImg.SetValue(RelativePanel.AlignLeftWithProperty, klassenGrid);
+            schoolImg.SetValue(RelativePanel.AlignRightWithProperty, klassenGrid);
+            schoolImg.VerticalAlignment = VerticalAlignment.Top;
+            schoolImg.Margin = new Thickness(0,0,30,0);
+
+
+            logoStack.SetValue(RelativePanel.AlignTopWithPanelProperty, true);
+            logoStack.SetValue(RelativePanel.AlignRightWithPanelProperty, true);
+            logoStack.SetValue(RelativePanel.AlignLeftWithProperty, klassenFoto);
+            logoStack.SetValue(RelativePanel.AlignRightWithProperty, klassenFoto);
+            logoStack.Margin = new Thickness(0);
+
+
+            klassenGrid.SetValue(RelativePanel.AlignBottomWithPanelProperty, true);
+            klassenGrid.SetValue(RelativePanel.AlignLeftWithPanelProperty, true);
+            klassenGrid.Margin = new Thickness(0, 0, 30, 0);
+
+
+            klassenFoto.SetValue(RelativePanel.AlignRightWithPanelProperty, true);
+            klassenFoto.SetValue(RelativePanel.AlignBottomWithPanelProperty, true);
+            klassenFoto.Margin = new Thickness(0);
+
+            rp.Margin = new Thickness(30);
+
+
+            rp.Children.Add(rect);
+            rp.Children.Add(schoolImg);
+            rp.Children.Add(logoStack);
+            rp.Children.Add(klassenGrid);
+            rp.Children.Add(klassenFoto);
+
+            grid.Children.Add(rp);
+
         }
 
         #endregion
