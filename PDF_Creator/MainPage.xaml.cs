@@ -91,15 +91,24 @@ namespace PDF_Creator
             return bitmapImage;
 
         }
-
-
-
+        
         private void BTN_open_Click(object sender, RoutedEventArgs e)
         {
-            FileManager.readCSV();
+            FileManager.readCSV();            
+        }
 
-            BTN_print.Visibility = Visibility.Visible;
-            BTN_save.Visibility = Visibility.Visible;
+        public void klasse_Changed(Klasse klasse)
+        {
+            if (klasse != null)
+            {
+                BTN_print.Visibility = Visibility.Visible;
+                BTN_save.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BTN_print.Visibility = Visibility.Collapsed;
+                BTN_save.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

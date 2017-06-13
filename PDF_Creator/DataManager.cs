@@ -14,14 +14,14 @@ namespace PDF_Creator
 
         private static DataManager instance;
         private Klasse klasse = null;
-        private event OnKlasseChangedListener Changed;
+
+        public event OnKlasseChangedListener Changed;
 
         private DataManager() { }
 
         protected virtual void OnChanged(Klasse klasse)
         {
-            if (Changed != null)
-                Changed(klasse);
+            Changed?.Invoke(klasse);
         }
 
         public Klasse Klasse

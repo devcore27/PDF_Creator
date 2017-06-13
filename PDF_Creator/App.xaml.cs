@@ -82,7 +82,12 @@ namespace PDF_Creator
                 DataManager.Instance.loadSettings();
             });
 
-
+            DataManager.Instance.Changed += new DataManager.OnKlasseChangedListener(delegate (Klasse k)
+            {
+                var frame = (Frame)Window.Current.Content;
+                var page = (MainPage)frame.Content;
+                page.klasse_Changed(k);
+            });
         }
 
         /// <summary>
