@@ -11,13 +11,7 @@ namespace PDF_Creator
         private string name;
         private string leiter;
         private List<string> students = new List<string>();
-
-        public Klasse(string name, string leiter)
-        {
-            this.name = name;
-            this.leiter = leiter;
-        }
-
+        
         public Klasse (params string[] list)
         {
             name = list[0];
@@ -59,7 +53,7 @@ namespace PDF_Creator
             }
         }
 
-        public void addStudent(string name)
+        private void addStudent(string name)
         {
             students.Add(name);
         }
