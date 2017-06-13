@@ -106,7 +106,10 @@ namespace PDF_Creator
                     col++;
                 }
             }
-            klass_border.Child = klassenGrid;
+
+            ScrollViewer sv = new ScrollViewer();
+            sv.Content = klassenGrid;
+            klass_border.Child = sv;
         }
 
         private async void BTN_change_school_Click(object sender, RoutedEventArgs e)
