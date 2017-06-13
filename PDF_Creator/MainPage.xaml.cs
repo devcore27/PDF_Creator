@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,6 +10,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.Threading;
 using Windows.UI.Core;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -32,7 +33,80 @@ namespace PDF_Creator
 
         public MainPage()
         {
-            this.InitializeComponent();
+            this.InitializeComponent();         
+            TimeSpan tperiod = TimeSpan.FromSeconds(0.1);
+            ThreadPoolTimer tTimer = ThreadPoolTimer.CreatePeriodicTimer(
+                async (source) =>
+                {
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.High,
+                        () =>
+                        {
+
+                            myPage.Width = Window.Current.Bounds.Width;
+                            grid_main.Width = Window.Current.Bounds.Width;
+                            Klasse klasse = DataManager.Instance.Klasse;
+                            if(klasse != null)
+                            {
+                                generateKlass();
+                            }
+                        }
+                        );
+                },
+                    tperiod);
+        }
+
+
+        private void generateKlass()
+        {
+            Grid klassenGrid = new Grid();
+            klassenGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            klassenGrid.VerticalAlignment = VerticalAlignment.Center;
+            for (int i = 1; i <= KLASSENGRID_COL_COUNT; ++i)
+            {
+                ColumnDefinition columnDefinition = new ColumnDefinition();
+                columnDefinition.Width = new GridLength(KLASSENGRID_COL_WIDTH);
+                klassenGrid.ColumnDefinitions.Add(columnDefinition);
+            }
+            for (int i = 1; i <= KLASSENGRID_ROW_COUNT; ++i)
+            {
+                RowDefinition rowDefinition = new RowDefinition();
+                rowDefinition.Height = new GridLength(KLASSENGRID_ROW_HEIGHT);
+                klassenGrid.RowDefinitions.Add(rowDefinition);
+            }
+            Klasse klasse = DataManager.Instance.Klasse;
+            int studentsCount = klasse.Students.Count;
+            int cur = 0, col = 0, row = 0;
+            while (cur < studentsCount)
+            {
+                TextBlock txt = new TextBlock();
+                txt.FontSize = 12;
+                if (col == 0 && row == 0)
+                {
+                    txt.Text = "Klasse: " + klasse.Name;
+                    txt.FontWeight = FontWeights.Bold;
+
+                }
+                else if (col == 1 && row == 0)
+                {
+                    txt.Text = "Klassenleiter: " + klasse.Leiter;
+                    txt.FontWeight = FontWeights.Bold;
+                }
+                else if (!(col == 2 && row == 0))
+                {
+                    txt.Text = klasse.Students[cur++];
+                }
+
+                klassenGrid.Children.Add(txt);
+                Grid.SetColumn(txt, col);
+                Grid.SetRow(txt, row);
+
+                if (++row == KLASSENGRID_ROW_COUNT)
+                {
+                    row = 0;
+                    col++;
+                }
+            }
+            klass_border.Child = klassenGrid;
         }
 
         private async void BTN_change_school_Click(object sender, RoutedEventArgs e)
@@ -91,8 +165,10 @@ namespace PDF_Creator
             return bitmapImage;
 
         }
+
         
         private void BTN_open_Click(object sender, RoutedEventArgs e)
+
         {
             FileManager.readCSV();            
         }

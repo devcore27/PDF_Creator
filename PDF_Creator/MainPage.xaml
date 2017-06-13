@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="grid_main">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="10" />
@@ -58,7 +58,7 @@
             </Grid.RowDefinitions>
 
             <!--IMG_school-->
-            <RelativePanel Grid.Column="0" Grid.Row="0" Margin="15,15,15,0" >
+            <RelativePanel Grid.Column="0" Grid.Row="0" Margin="15,15,15,15" >
                 <Image x:Name="IMG_school" Source="Assets/schule.jpg" Stretch="Fill" Margin="0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
                 <Button x:Name="BTN_school_source" Height="30" Width="30"  Padding="0" Click="BTN_school_source_Click" Background="Black" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                     <Image Source="Assets/image.png" Height="20" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -85,7 +85,8 @@
             </Viewbox>
 
 
-            <Border Grid.Column="0" Grid.Row="1" Margin="15,15,15,15" BorderBrush="Black" BorderThickness="1"/>
+            <Border x:Name="klass_border" Grid.Column="0" Grid.Row="1" Margin="15,15,15,15" BorderBrush="Black" BorderThickness="1">
+            </Border>
             <Border Grid.Column="1" Grid.Row="1" Margin="15,15,15,15" BorderBrush="Black" BorderThickness="1"/>
             <Border Grid.Column="0" Grid.Row="0" Margin="15,15,15,15" BorderBrush="Black" BorderThickness="1"/>
 

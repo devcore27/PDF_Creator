@@ -21,7 +21,6 @@ namespace PDF_Creator
             StorageFile file = await openPicker.PickSingleFileAsync();
             if (file != null)
             {
-                localSettings.Values["is_csv_file_selectet"] = "true";
                 try
                 {
                     using (var inputStream = await file.OpenReadAsync())
