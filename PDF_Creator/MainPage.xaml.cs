@@ -34,7 +34,7 @@ namespace PDF_Creator
 
         public MainPage()
         {
-            this.InitializeComponent();         
+            this.InitializeComponent();
             TimeSpan tperiod = TimeSpan.FromSeconds(0.1);
             ThreadPoolTimer tTimer = ThreadPoolTimer.CreatePeriodicTimer(
                 async (source) =>
@@ -48,6 +48,20 @@ namespace PDF_Creator
                             {
                                 generateKlass(klass_border);
                             }
+                            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+                            Object value = localSettings.Values["first_start"];
+
+                            if (value == null)
+                            {
+                                COB_mode.IsEnabled = false;
+                            }
+                            else
+                            {
+                                Task.Delay(1);
+                                COB_mode.IsEnabled = true;
+                            }
+
                         }
                         );
                 },
@@ -179,7 +193,7 @@ namespace PDF_Creator
         }
 
         private void UpdateKlassenGrid(Klasse klasse)
-        {            
+        {
             klassenGrid.Children.Clear();
             if (klasse == null) return;
             if (klassenGrid.ColumnDefinitions.Count == 0)
@@ -296,11 +310,12 @@ namespace PDF_Creator
             return bitmapImage;
 
         }
-        
+
         private void BTN_open_Click(object sender, RoutedEventArgs e)
 
         {
-            FileManager.ReadCSV();            
+            FileManager.ReadCSV();
+            localSettings.Values["first_start"] = "true";
         }
 
         public void KlassenChanged(Klasse klasse)
@@ -358,9 +373,9 @@ namespace PDF_Creator
         private void klassenCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-                Klasse klasse = DataManager.Instance.KlasseAt(klassenCombo.SelectedIndex);
-                UpdateKlassenGrid(klasse);
-            
+            Klasse klasse = DataManager.Instance.KlasseAt(klassenCombo.SelectedIndex);
+            UpdateKlassenGrid(klasse);
+
         }
     }
 }
