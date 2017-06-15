@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PDF_Creator
 {
     class DataManager
     {
-        private static string KLASSE_SETTINGS_KEY = "klasse_saved";
+        //private static string KLASSE_SETTINGS_KEY = "klasse_saved";
 
-        public delegate void OnKlasseChangedListener(Klasse klasse);
+        public delegate void OnKlassenChangedListener(Klasse klasse);
 
         private static DataManager instance;
-        private Klasse klasse = null;
+        private List<Klasse> klassen = new List<Klasse>();
 
-        public event OnKlasseChangedListener Changed;
+        public event OnKlassenChangedListener Changed;
 
         private DataManager() { }
 
@@ -24,18 +21,11 @@ namespace PDF_Creator
             Changed?.Invoke(klasse);
         }
 
-        public Klasse Klasse
+        public Klasse KlasseAt(int index)
         {
-            get
-            {
-                return klasse;
-            }
-
-            set
-            {
-                klasse = value;
-                OnChanged(klasse);
-            }
+            if (index < 0 || index >= klassen.Count())
+                return null;
+            return klassen.ElementAt(index);
         }
 
         public static DataManager Instance
@@ -50,9 +40,26 @@ namespace PDF_Creator
             }
         }
 
-        public bool isEmpty() { return klasse == null;  }
+        public bool IsEmpty() { return klassen.Count == 0;  }
 
-        public void saveSettings()
+        public void Clear()
+        {
+            klassen.Clear();
+            Changed(null);
+        }
+
+        public int Count()
+        {
+            return klassen.Count();
+        }
+
+        public void AddKlasse(Klasse klasse)
+        {
+            klassen.Add(klasse);
+            OnChanged(klasse);
+        }
+
+        /*public void saveSettings()
         {
             String klasseAsString = null;
             if (!isEmpty())
@@ -71,12 +78,12 @@ namespace PDF_Creator
         {
             Windows.Storage.ApplicationDataContainer localSettings =
                 Windows.Storage.ApplicationData.Current.LocalSettings;
-            String klasseAsString = (String) localSettings.Values[KLASSE_SETTINGS_KEY];
+            String klasseAsString = (String)localSettings.Values[KLASSE_SETTINGS_KEY];
 
             if (klasseAsString != null)
-            {                
+            {
                 Klasse = new Klasse(klasseAsString.Split('\t'));
             }
-        }
+        }*/
     }
 }

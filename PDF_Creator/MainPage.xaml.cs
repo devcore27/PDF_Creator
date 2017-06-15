@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -44,7 +44,6 @@ namespace PDF_Creator
                     await Dispatcher.RunAsync(CoreDispatcherPriority.High,
                         () =>
                         {
-
                             myPage.Width = Window.Current.Bounds.Width;
                             grid_main.Width = Window.Current.Bounds.Width;
                             Klasse klasse = DataManager.Instance.Klasse;
@@ -52,6 +51,7 @@ namespace PDF_Creator
                             {
                                 generateKlass(klass_border);
                             }
+
                         }
                         );
                 },
@@ -78,11 +78,37 @@ namespace PDF_Creator
             }
             Klasse klasse = DataManager.Instance.Klasse;
             int studentsCount = klasse.Students.Count;
+
+private void UpdateKlassenGrid(Klasse klasse)
+        {            
+            klassenGrid.Children.Clear();
+            if (klasse == null) return;
+            if (klassenGrid.ColumnDefinitions.Count == 0)
+                for (int i = 1; i <= KLASSENGRID_COL_COUNT; ++i)
+                {
+                    ColumnDefinition columnDefinition = new ColumnDefinition()
+                    {
+                        Width = new GridLength(KLASSENGRID_COL_WIDTH)
+                    };
+                    klassenGrid.ColumnDefinitions.Add(columnDefinition);
+                }
+            if (klassenGrid.RowDefinitions.Count == 0)
+                for (int i = 1; i <= KLASSENGRID_ROW_COUNT; ++i)
+                {
+                    RowDefinition rowDefinition = new RowDefinition()
+                    {
+                        Height = new GridLength(KLASSENGRID_ROW_HEIGHT)
+                    };
+                    klassenGrid.RowDefinitions.Add(rowDefinition);
+                }
+            int studentsCount = klasse.StudentsCount();
             int cur = 0, col = 0, row = 0;
             while (cur < studentsCount)
             {
-                TextBlock txt = new TextBlock();
-                txt.FontSize = 12;
+                TextBlock txt = new TextBlock()
+                {
+                    FontSize = 12
+                };
                 if (col == 0 && row == 0)
                 {
                     txt.Text = "Klasse: " + klasse.Name;
@@ -96,7 +122,7 @@ namespace PDF_Creator
                 }
                 else if (!(col == 2 && row == 0))
                 {
-                    txt.Text = klasse.Students[cur++];
+                    txt.Text = klasse.StudentAt(cur++);
                 }
 
                 klassenGrid.Children.Add(txt);
@@ -166,9 +192,11 @@ namespace PDF_Creator
 
         private async void BTN_change_school_Click(object sender, RoutedEventArgs e)
         {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+            var picker = new Windows.Storage.Pickers.FileOpenPicker()
+            {
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary
+            };
             picker.FileTypeFilter.Add(".jpg");
             picker.FileTypeFilter.Add(".jpeg");
             picker.FileTypeFilter.Add(".png");
@@ -190,9 +218,11 @@ namespace PDF_Creator
 
         private async void BTN_school_source_Click(object sender, RoutedEventArgs e)
         {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+            var picker = new Windows.Storage.Pickers.FileOpenPicker()
+            {
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary,
+            };
             picker.FileTypeFilter.Add(".jpg");
             picker.FileTypeFilter.Add(".jpeg");
             picker.FileTypeFilter.Add(".png");
@@ -222,19 +252,20 @@ namespace PDF_Creator
 
         }
 
-
         private void BTN_open_Click(object sender, RoutedEventArgs e)
-
         {
-            FileManager.readCSV();
+            FileManager.ReadCSV();            
         }
 
-        public void klasse_Changed(Klasse klasse)
+        public void KlassenChanged(Klasse klasse)
         {
-            if (klasse != null)
+            if (!DataManager.Instance.IsEmpty())
             {
                 BTN_print.Visibility = Visibility.Visible;
-                //BTN_save.Visibility = Visibility.Visible;
+                BTN_save.Visibility = Visibility.Visible;
+                klassenCombo.Items.Add(klasse.Name);
+                if (klassenCombo.SelectedIndex < 0)
+                    klassenCombo.SelectedIndex = 0;
             }
             else
             {
@@ -274,6 +305,16 @@ namespace PDF_Creator
             }
         }
      
+                BTN_save.Visibility = Visibility.Collapsed;
+                klassenCombo.Items.Clear();
+            }
+        }
+
+        private void KlassenCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {            
+            Klasse klasse = DataManager.Instance.KlasseAt(klassenCombo.SelectedIndex);
+            UpdateKlassenGrid(klasse);
+        }
     }
 
 

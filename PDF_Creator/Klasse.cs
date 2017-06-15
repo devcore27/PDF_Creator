@@ -8,24 +8,20 @@ namespace PDF_Creator
 {
     public class Klasse
     {
+        struct StudentName
+        {
+            public string firstname;
+            public string lastname;
+        }
+
         private string name;
         private string leiter;
-        private List<string> students = new List<string>();
-
-        public Klasse(string name, string leiter)
+        private List<StudentName> students = new List<StudentName>();
+        
+        public Klasse (string name, string leiter)
         {
             this.name = name;
             this.leiter = leiter;
-        }
-
-        public Klasse (params string[] list)
-        {
-            name = list[0];
-            leiter = list[1];
-            for (int i = 2; i != list.Length; ++i)
-            {
-                addStudent(list[i]);
-            }
         }
 
         public string Name
@@ -52,16 +48,24 @@ namespace PDF_Creator
             }
         }
 
-        public List<string> Students {
-            get
-            {
-                return students;
-            }
+        public string StudentAt(int index)
+        {
+            return students[index].lastname + ", " + students[index].firstname;
         }
 
-        public void addStudent(string name)
+        public int StudentsCount()
         {
-            students.Add(name);
+            return students.Count();
+        }
+
+        public void AddStudent(string firstname, string lastname)
+        {
+            StudentName studentName = new StudentName()
+            {
+                firstname = firstname,
+                lastname = lastname
+            };
+            students.Add(studentName);
         }
 
     }
