@@ -75,15 +75,15 @@ namespace PDF_Creator
                 Window.Current.Activate();
             }
 
-            /*EnteredBackground += new EnteredBackgroundEventHandler(delegate (Object o, EnteredBackgroundEventArgs a)
+            EnteredBackground += new EnteredBackgroundEventHandler(delegate (Object o, EnteredBackgroundEventArgs a)
             {
-                DataManager.Instance.saveSettings();
+                DataManager.Instance.SaveSettings();
             });
 
             LeavingBackground += new LeavingBackgroundEventHandler(delegate (Object o, LeavingBackgroundEventArgs a)
             {
-                DataManager.Instance.loadSettings();
-            });*/
+                DataManager.Instance.LoadSettings();
+            });
 
             DataManager.Instance.Changed += new DataManager.OnKlassenChangedListener(delegate (Klasse klasse)
             {

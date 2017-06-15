@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PDF_Creator
 {
     class DataManager
     {
-        //private static string KLASSE_SETTINGS_KEY = "klasse_saved";
+        private static string KLASSEN_SETTINGS_KEY = "klassen_saved";
 
         public delegate void OnKlassenChangedListener(Klasse klasse);
 
@@ -59,31 +60,55 @@ namespace PDF_Creator
             OnChanged(klasse);
         }
 
-        /*public void saveSettings()
+        public void SaveSettings()
         {
-            String klasseAsString = null;
-            if (!isEmpty())
+            string klassenAsString = "";
+            if (!IsEmpty())
             {
-                klasseAsString = klasse.Name + '\t' + klasse.Leiter;
-                foreach (string student in klasse.Students)
-                    klasseAsString += '\t' + student;
+                foreach (Klasse klasse in klassen)
+                {
+                    klassenAsString += klasse.Name + '\t' + klasse.Leiter;
+                    foreach (Klasse.StudentName student in klasse.Students)
+                    {
+                        klassenAsString += '\t' + student.lastname + ',' + student.firstname;
+                    }
+                    klassenAsString += '\n';
+                }
+                
             }
 
             Windows.Storage.ApplicationDataContainer localSettings =
                 Windows.Storage.ApplicationData.Current.LocalSettings;
-            localSettings.Values[KLASSE_SETTINGS_KEY] = klasseAsString;
+            localSettings.Values[KLASSEN_SETTINGS_KEY] = klassenAsString;
         }
 
-        public void loadSettings()
+        public void LoadSettings()
         {
             Windows.Storage.ApplicationDataContainer localSettings =
                 Windows.Storage.ApplicationData.Current.LocalSettings;
-            String klasseAsString = (String)localSettings.Values[KLASSE_SETTINGS_KEY];
 
-            if (klasseAsString != null)
+            if (!localSettings.Values.ContainsKey(KLASSEN_SETTINGS_KEY))
+                return;
+
+            String klassenAsString = (String)localSettings.Values[KLASSEN_SETTINGS_KEY];
+            
+            if (klassenAsString != null && klassenAsString.Length > 0)
             {
-                Klasse = new Klasse(klasseAsString.Split('\t'));
+                string[] klassen = klassenAsString.Split('\n');
+                foreach (string klasseString in klassen)
+                {
+                    if (klasseString.Length == 0) continue;
+                    string[] data = klasseString.Split('\t');
+                    Klasse klasse = new Klasse(data[0], data[1]);
+                    for (int i = 2; i < data.Length; ++i)
+                    {
+                        string[] names = data[i].Split(',');
+                        klasse.AddStudent(names[1], names[0]);
+                    }
+                    AddKlasse(klasse);
+                }
+                
             }
-        }*/
+        }
     }
 }

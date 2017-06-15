@@ -103,7 +103,7 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <ComboBox Grid.Column="0" Grid.Row="0" x:Name="klassenCombo" Height="40" SelectionChanged="klassenCombo_SelectionChanged" HorizontalAlignment="Stretch"/>
+                    <ComboBox Grid.Column="0" Grid.Row="0" x:Name="klassenCombo" Height="40" SelectionChanged="KlassenCombo_SelectionChanged" HorizontalAlignment="Stretch"/>
                     <ScrollViewer Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Grid x:Name="klassenGrid"/>
                     </ScrollViewer>
