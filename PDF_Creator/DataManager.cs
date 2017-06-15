@@ -86,6 +86,10 @@ namespace PDF_Creator
         {
             Windows.Storage.ApplicationDataContainer localSettings =
                 Windows.Storage.ApplicationData.Current.LocalSettings;
+
+            if (!localSettings.Values.ContainsKey(KLASSEN_SETTINGS_KEY))
+                return;
+
             String klassenAsString = (String)localSettings.Values[KLASSEN_SETTINGS_KEY];
             
             if (klassenAsString != null && klassenAsString.Length > 0)
