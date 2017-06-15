@@ -85,7 +85,20 @@
             </Viewbox>
 
 
-            <Border x:Name="klass_border" Grid.Column="0" Grid.Row="1" Margin="15,15,15,15" BorderBrush="Black" BorderThickness="1">
+            <Border x:Name="klass_border" Grid.Column="0" Grid.Row="1" Margin="15,15,15,15" BorderBrush="Black" BorderThickness="1">                
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ComboBox Grid.Column="0" Grid.Row="0" x:Name="klassenCombo" Height="40" SelectionChanged="klassenCombo_SelectionChanged" HorizontalAlignment="Stretch"/>
+                    <ScrollViewer Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid x:Name="klassenGrid"/>
+                    </ScrollViewer>
+                </Grid>                
             </Border>
             <Border Grid.Column="1" Grid.Row="1" Margin="15,15,15,15" BorderBrush="Black" BorderThickness="1"/>
             <Border Grid.Column="0" Grid.Row="0" Margin="15,15,15,15" BorderBrush="Black" BorderThickness="1"/>

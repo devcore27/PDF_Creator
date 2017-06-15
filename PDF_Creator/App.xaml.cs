@@ -75,7 +75,7 @@ namespace PDF_Creator
                 Window.Current.Activate();
             }
 
-            EnteredBackground += new EnteredBackgroundEventHandler(delegate (Object o, EnteredBackgroundEventArgs a)
+            /*EnteredBackground += new EnteredBackgroundEventHandler(delegate (Object o, EnteredBackgroundEventArgs a)
             {
                 DataManager.Instance.saveSettings();
             });
@@ -83,13 +83,13 @@ namespace PDF_Creator
             LeavingBackground += new LeavingBackgroundEventHandler(delegate (Object o, LeavingBackgroundEventArgs a)
             {
                 DataManager.Instance.loadSettings();
-            });
+            });*/
 
-            DataManager.Instance.Changed += new DataManager.OnKlasseChangedListener(delegate (Klasse k)
+            DataManager.Instance.Changed += new DataManager.OnKlassenChangedListener(delegate (Klasse klasse)
             {
                 var frame = (Frame)Window.Current.Content;
                 var page = (MainPage)frame.Content;
-                page.klasse_Changed(k);
+                page.KlassenChanged(klasse);
             });
         }
 

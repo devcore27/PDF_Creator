@@ -22,8 +22,8 @@ namespace PDF_Creator
         private static int GRID_LEFT_COL_WIDTH = GRID_WIDTH * 17 / 40;
         private static int GRID_RIGHT_COL_WIDTH = GRID_WIDTH * 23 / 40;
         private static int GRID_ROW_HEIGHT = GRID_HEIGHT / 2;
-        private static int KLASSENGRID_COL_COUNT = 3;
-        private static int KLASSENGRID_ROW_COUNT = 11;
+        private static int KLASSENGRID_COL_COUNT = 2;
+        private static int KLASSENGRID_ROW_COUNT = 14;
         private static int KLASSENGRID_COL_WIDTH = (GRID_LEFT_COL_WIDTH - 2 * DEFAULT_PADDING) / KLASSENGRID_COL_COUNT;
         private static int KLASSENGRID_ROW_HEIGHT = (GRID_ROW_HEIGHT - 2 * DEFAULT_PADDING) / KLASSENGRID_ROW_COUNT;
 
@@ -239,13 +239,13 @@ namespace PDF_Creator
                 rowDefinition.Height = new GridLength(KLASSENGRID_ROW_HEIGHT);
                 klassenGrid.RowDefinitions.Add(rowDefinition);
             }
-            Klasse klasse = DataManager.Instance.Klasse;
-            int studentsCount = klasse.Students.Count;
+            Klasse klasse = DataManager.Instance.KlasseAt(klassenCombo.SelectedIndex);
+            int studentsCount = klasse.StudentsCount();
             int cur = 0, col = 0, row = 0;
             while (cur < studentsCount)
             {
                 TextBlock txt = new TextBlock();
-                txt.FontSize = 12;
+                txt.FontSize = 14;
                 if (col == 0 && row == 0)
                 {
                     txt.Text = "Klasse: " + klasse.Name;
@@ -259,7 +259,7 @@ namespace PDF_Creator
                 }
                 else if (!(col == 2 && row == 0))
                 {
-                    txt.Text = klasse.Students[cur++];
+                    txt.Text = klasse.StudentAt(cur++);
                 }
 
                 klassenGrid.Children.Add(txt);
