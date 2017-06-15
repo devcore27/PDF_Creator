@@ -36,13 +36,6 @@
         </Grid.RowDefinitions>
 
         <RelativePanel Grid.Column="0" Grid.ColumnSpan="15" Background="DarkSlateBlue" VerticalAlignment="Stretch">
-            <StackPanel Width="200" RelativePanel.AlignVerticalCenterWithPanel="True">
-                <ComboBox x:Name="COB_mode" Width="150" SelectionChanged="COB_mode_SelectionChanged" Foreground="White" BorderBrush="White"  >
-                    <ComboBoxItem Content="Abschlussblatt" IsSelected="True"/>
-                    <ComboBoxItem Content="Nur Klassenliste" />
-                </ComboBox>
-            </StackPanel>
-            <TextBlock x:Name="eventLog" Height="30" Width="200" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
             <TextBlock x:Name="TXT_headline" Text="PDF-Creator" Foreground="White" FontSize="25"  VerticalAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,10,0,0" />
             <Button Height="50" Width="150" VerticalAlignment="Center" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Background="Transparent" Style="{StaticResource ButtonStyle1}" x:Name="BTN_open"  Click="BTN_open_Click" >
                 <StackPanel Orientation="Horizontal">
@@ -52,11 +45,9 @@
             </Button>
         </RelativePanel>
 
-       
 
 
-
-        <Grid x:Name="GRID_prev" Grid.Column="2" Grid.ColumnSpan="11" Grid.Row="2" Grid.RowSpan="3"  BorderBrush="Black" BorderThickness="2">
+        <Grid  Grid.Column="2" Grid.ColumnSpan="11" Grid.Row="2" Grid.RowSpan="3"  BorderBrush="Black" BorderThickness="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -76,7 +67,7 @@
 
             <!--IMG_class-->
             <RelativePanel Grid.Column="1" Grid.Row="1" Margin="15,15,15,15">
-                <Image x:Name="IMG_class" Visibility="Collapsed" Stretch="Fill" Margin="0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
+                <Image x:Name="IMG_class"  Stretch="Fill" Margin="0" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
                 <Button x:Name="BTN_change_class" Height="30" Width="30"  Padding="0" Click="BTN_change_school_Click" Background="Black" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                     <Image Source="Assets/image.png" Height="20" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Button>
@@ -87,11 +78,9 @@
             <Viewbox  Grid.Column="1" Grid.Row="0" Margin="15,15,15,0">
                 <StackPanel>
                     <TextBlock Height="50" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" FontSize="12" FontWeight="Bold" Text="Herzlichen Glückwunsch &#x0a; vom Lehrerkollegium &#x0a; des Beruflichen Schulzentrums für Technik I"/>
-                    <StackPanel>
-                        <Image x:Name="IMG_logo" Source="Assets/isLogo.png" Height="50" Margin="0,10,0,0"/>
-                    </StackPanel>
+                    <Image x:Name="IMG_logo" Source="Assets/isLogo.png" Height="50" Margin="0,10,0,0"/>
                     <TextBlock Text="zum" HorizontalAlignment="Left" Margin="0,0,0,0" FontWeight="Bold"/>
-                    <TextBox x:Name="TBL_logo_title" Text="Berufsabschluss" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"  />
+                    <TextBlock  Text="Berufsabschluss" FontSize="26" HorizontalAlignment="Center" FontWeight="Bold"/>
                 </StackPanel>
             </Viewbox>
 
@@ -127,7 +116,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="BTN_print" Content="Print..." Click="PrintButtonClick" Style="{StaticResource BTN_Style}" HorizontalAlignment="Center" Grid.Column="0" Visibility="Collapsed" Grid.ColumnSpan="2" />
+                <Button x:Name="BTN_print" Content="Print..." Click="PrintButtonClick" Style="{StaticResource BTN_Style}" HorizontalAlignment="Center" Grid.Column="0" Visibility="Collapsed"/>
                 <Button x:Name="BTN_save" Content="Save..."  Style="{StaticResource BTN_Style}" HorizontalAlignment="Center" Grid.Column="1" Visibility="Collapsed"/>
             </Grid>
         </StackPanel>

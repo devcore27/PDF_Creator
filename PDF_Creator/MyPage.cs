@@ -124,8 +124,7 @@ namespace PDF_Creator
             try
             {
                 printDoc.SetPreviewPage(e.PageNumber, grid);
-            }
-            catch
+            }catch
             {
                 ShowCD();
             }
@@ -186,50 +185,6 @@ namespace PDF_Creator
         {
             grid = new Grid();
             RelativePanel rp = new RelativePanel();
-
-            if (COB_mode.SelectedIndex == 0)
-            {
-                Image schoolImg = new Image();
-                schoolImg.Source = IMG_school.Source;
-                schoolImg.HorizontalAlignment = HorizontalAlignment.Stretch;
-                schoolImg.VerticalAlignment = VerticalAlignment.Stretch;
-
-                StackPanel logoStack = new StackPanel();
-                logoStack.Orientation = Orientation.Vertical;
-                logoStack.HorizontalAlignment = HorizontalAlignment.Center;
-                logoStack.VerticalAlignment = VerticalAlignment.Center;
-
-                TextBlock congratsText = new TextBlock();
-                congratsText.Text = "Herzlichen Glückwunsch\nvom Lehrerkollegium\ndes Beruflichen Schulzentrums für Technik I";
-                congratsText.HorizontalAlignment = HorizontalAlignment.Center;
-                congratsText.TextAlignment = TextAlignment.Center;
-                congratsText.FontSize = 22;
-                congratsText.FontWeight = FontWeights.Bold;
-
-                Image logoImg = new Image();
-                logoImg.Source = IMG_logo.Source;
-                logoImg.Height = 150;
-
-                TextBlock zumText = new TextBlock();
-                zumText.Text = "zum";
-                zumText.FontSize = 26;
-                zumText.FontWeight = FontWeights.Bold;
-
-                TextBlock causeText = new TextBlock();
-                causeText.Text = TBL_logo_title.Text;
-                causeText.FontSize = 40;
-                causeText.HorizontalAlignment = HorizontalAlignment.Center;
-                causeText.FontWeight = FontWeights.Bold;
-                logoStack.Children.Add(congratsText);
-                logoStack.Children.Add(logoImg);
-                logoStack.Children.Add(zumText);
-                logoStack.Children.Add(causeText);
-
-
-                Grid klassenGrid = new Grid();
-                klassenGrid.HorizontalAlignment = HorizontalAlignment.Center;
-                klassenGrid.VerticalAlignment = VerticalAlignment.Center;
-                for (int i = 1; i <= KLASSENGRID_COL_COUNT; ++i)
 
 
             Image schoolImg = new Image()
@@ -309,80 +264,31 @@ namespace PDF_Creator
                 };
                 if (col == 0 && row == 0)
                 {
-                    ColumnDefinition columnDefinition = new ColumnDefinition();
-                    columnDefinition.Width = new GridLength(KLASSENGRID_COL_WIDTH);
-                    klassenGrid.ColumnDefinitions.Add(columnDefinition);
+                    txt.Text = "Klasse: " + klasse.Name;
+                    txt.FontWeight = FontWeights.Bold;
+
                 }
-                for (int i = 1; i <= KLASSENGRID_ROW_COUNT; ++i)
+                else if (col == 1 && row == 0)
                 {
-                    RowDefinition rowDefinition = new RowDefinition();
-                    rowDefinition.Height = new GridLength(KLASSENGRID_ROW_HEIGHT);
-                    klassenGrid.RowDefinitions.Add(rowDefinition);
+                    txt.Text = "Klassenleiter: " + klasse.Leiter;
+                    txt.FontWeight = FontWeights.Bold;
                 }
-                Klasse klasse = DataManager.Instance.Klasse;
-                int studentsCount = klasse.Students.Count;
-                int cur = 0, col = 0, row = 0;
-                while (cur < studentsCount)
+                else if (!(col == 2 && row == 0))
                 {
-                    TextBlock txt = new TextBlock();
-                    txt.FontSize = 12;
-                    if (col == 0 && row == 0)
-                    {
-                        txt.Text = "Klasse: " + klasse.Name;
-                        txt.FontWeight = FontWeights.Bold;
                     txt.Text = klasse.StudentAt(cur++);
                 }
 
-                    }
-                    else if (col == 1 && row == 0)
-                    {
-                        txt.Text = "Klassenleiter: " + klasse.Leiter;
-                        txt.FontWeight = FontWeights.Bold;
-                    }
-                    else if (!(col == 2 && row == 0))
-                    {
-                        txt.Text = klasse.Students[cur++];
-                    }
+                klassenGrid.Children.Add(txt);
+                Grid.SetColumn(txt, col);
+                Grid.SetRow(txt, row);
 
-                    klassenGrid.Children.Add(txt);
-                    Grid.SetColumn(txt, col);
-                    Grid.SetRow(txt, row);
-
-                    if (++row == KLASSENGRID_ROW_COUNT)
-                    {
-                        row = 0;
-                        col++;
-                    }
+                if (++row == KLASSENGRID_ROW_COUNT)
+                {
+                    row = 0;
+                    col++;
                 }
+            }
 
-                Image klassenFoto = new Image();
-                klassenFoto.Source = IMG_class.Source;
-                klassenFoto.Height = GRID_ROW_HEIGHT;
-                //klassenFoto.HorizontalAlignment = HorizontalAlignment.Center;
-                //klassenFoto.VerticalAlignment = VerticalAlignment.Center;
-
-                Rectangle rect = new Rectangle();
-                rect.SetValue(RelativePanel.AlignTopWithPanelProperty, true);
-                rect.SetValue(RelativePanel.AlignBottomWithPanelProperty, true);
-                rect.SetValue(RelativePanel.LeftOfProperty, logoStack);
-                rect.SetValue(RelativePanel.RightOfProperty, schoolImg);
-                rect.SetValue(RelativePanel.LeftOfProperty, klassenFoto);
-                rect.SetValue(RelativePanel.RightOfProperty, klassenGrid);
-                rect.Width = 30;
-
-                schoolImg.SetValue(RelativePanel.AlignLeftWithPanelProperty, true);
-                schoolImg.SetValue(RelativePanel.AlignTopWithPanelProperty, true);
-                schoolImg.SetValue(RelativePanel.AlignTopWithProperty, logoStack);
-                schoolImg.SetValue(RelativePanel.AlignBottomWithProperty, klassenFoto);
-                schoolImg.SetValue(RelativePanel.AlignLeftWithProperty, klassenGrid);
-                schoolImg.SetValue(RelativePanel.AlignRightWithProperty, klassenGrid);
-                schoolImg.VerticalAlignment = VerticalAlignment.Top;
-                schoolImg.Margin = new Thickness(0, 0, 30, 0);
-
-
-                logoStack.SetValue(RelativePanel.AlignTopWithPanelProperty, true);
-                logoStack.SetValue(RelativePanel.AlignRightWithPanelProperty, true);
-               
             Image klassenFoto = new Image()
             {
                 Source = IMG_class.Source,
@@ -390,92 +296,53 @@ namespace PDF_Creator
             };
             //klassenFoto.HorizontalAlignment = HorizontalAlignment.Center;
             //klassenFoto.VerticalAlignment = VerticalAlignment.Center;
- if (IMG_class.Visibility == Visibility.Collapsed)
-                {
-                }
-                else
-                {
-                    logoStack.SetValue(RelativePanel.AlignLeftWithProperty, klassenFoto);
-                    logoStack.SetValue(RelativePanel.AlignRightWithProperty, klassenFoto);
-                }
-                logoStack.Margin = new Thickness(0);
+
+            Rectangle rect = new Rectangle();
+            rect.SetValue(RelativePanel.AlignTopWithPanelProperty, true);
+            rect.SetValue(RelativePanel.AlignBottomWithPanelProperty, true);
+            rect.SetValue(RelativePanel.LeftOfProperty, logoStack);
+            rect.SetValue(RelativePanel.RightOfProperty, schoolImg);
+            rect.SetValue(RelativePanel.LeftOfProperty, klassenFoto);
+            rect.SetValue(RelativePanel.RightOfProperty, klassenGrid);
+            rect.Width = 30;
+
+            schoolImg.SetValue(RelativePanel.AlignLeftWithPanelProperty, true);
+            schoolImg.SetValue(RelativePanel.AlignTopWithPanelProperty, true);
+            schoolImg.SetValue(RelativePanel.AlignTopWithProperty, logoStack);
+            schoolImg.SetValue(RelativePanel.AlignBottomWithProperty, klassenFoto);
+            schoolImg.SetValue(RelativePanel.AlignLeftWithProperty, klassenGrid);
+            schoolImg.SetValue(RelativePanel.AlignRightWithProperty, klassenGrid);
+            schoolImg.VerticalAlignment = VerticalAlignment.Top;
+            schoolImg.Margin = new Thickness(0,0,30,0);
 
 
-                klassenGrid.SetValue(RelativePanel.AlignBottomWithPanelProperty, true);
-                klassenGrid.SetValue(RelativePanel.AlignLeftWithPanelProperty, true);
-                klassenGrid.Margin = new Thickness(0, 0, 30, 0);
+            logoStack.SetValue(RelativePanel.AlignTopWithPanelProperty, true);
+            logoStack.SetValue(RelativePanel.AlignRightWithPanelProperty, true);
+            logoStack.SetValue(RelativePanel.AlignLeftWithProperty, klassenFoto);
+            logoStack.SetValue(RelativePanel.AlignRightWithProperty, klassenFoto);
+            logoStack.Margin = new Thickness(0);
 
 
-                klassenFoto.SetValue(RelativePanel.AlignRightWithPanelProperty, true);
-                klassenFoto.SetValue(RelativePanel.AlignBottomWithPanelProperty, true);
-                klassenFoto.Margin = new Thickness(0);
-
-                rp.Margin = new Thickness(30);
+            klassenGrid.SetValue(RelativePanel.AlignBottomWithPanelProperty, true);
+            klassenGrid.SetValue(RelativePanel.AlignLeftWithPanelProperty, true);
+            klassenGrid.Margin = new Thickness(0, 0, 30, 0);
 
 
-                rp.Children.Add(rect);
-                rp.Children.Add(schoolImg);
-                rp.Children.Add(logoStack);
-                rp.Children.Add(klassenGrid);
-                rp.Children.Add(klassenFoto);
+            klassenFoto.SetValue(RelativePanel.AlignRightWithPanelProperty, true);
+            klassenFoto.SetValue(RelativePanel.AlignBottomWithPanelProperty, true);
+            klassenFoto.Margin = new Thickness(0);
 
-                grid.Children.Add(rp);
-            }
-            else if (COB_mode.SelectedIndex == 1)
-            {
+            rp.Margin = new Thickness(30);
 
-                Grid klassenGrid = new Grid();
-                klassenGrid.HorizontalAlignment = HorizontalAlignment.Center;
-                klassenGrid.VerticalAlignment = VerticalAlignment.Center;
-                for (int i = 1; i <= KLASSENGRID_COL_COUNT; ++i)
-                {
-                    ColumnDefinition columnDefinition = new ColumnDefinition();
-                    columnDefinition.Width = new GridLength(KLASSENGRID_COL_WIDTH);
-                    klassenGrid.ColumnDefinitions.Add(columnDefinition);
-                }
-                for (int i = 1; i <= KLASSENGRID_ROW_COUNT; ++i)
-                {
-                    RowDefinition rowDefinition = new RowDefinition();
-                    rowDefinition.Height = new GridLength(KLASSENGRID_ROW_HEIGHT);
-                    klassenGrid.RowDefinitions.Add(rowDefinition);
-                }
-                Klasse klasse = DataManager.Instance.Klasse;
-                int studentsCount = klasse.Students.Count;
-                int cur = 0, col = 0, row = 0;
-                while (cur < studentsCount)
-                {
-                    TextBlock txt = new TextBlock();
-                    txt.FontSize = 12;
-                    if (col == 0 && row == 0)
-                    {
-                        txt.Text = "Klasse: " + klasse.Name;
-                        txt.FontWeight = FontWeights.Bold;
 
-                    }
-                    else if (col == 1 && row == 0)
-                    {
-                        txt.Text = "Klassenleiter: " + klasse.Leiter;
-                        txt.FontWeight = FontWeights.Bold;
-                    }
-                    else if (!(col == 2 && row == 0))
-                    {
-                        txt.Text = klasse.Students[cur++];
-                    }
+            rp.Children.Add(rect);
+            rp.Children.Add(schoolImg);
+            rp.Children.Add(logoStack);
+            rp.Children.Add(klassenGrid);
+            rp.Children.Add(klassenFoto);
 
-                    klassenGrid.Children.Add(txt);
-                    Grid.SetColumn(txt, col);
-                    Grid.SetRow(txt, row);
+            grid.Children.Add(rp);
 
-                    if (++row == KLASSENGRID_ROW_COUNT)
-                    {
-                        row = 0;
-                        col++;
-                    }
-                }
-                rp.Margin = new Thickness(30);
-                rp.Children.Add(klassenGrid);
-                grid.Children.Add(rp);
-            }
         }
 
         #endregion
