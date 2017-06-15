@@ -95,8 +95,6 @@ namespace PDF_Creator
                             await FileIO.AppendTextAsync(file, entry + '\n');
                         }                            
                     }
-                    
-
                 }
                 catch (Exception ex)
                 {

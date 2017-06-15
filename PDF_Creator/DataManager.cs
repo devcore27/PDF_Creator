@@ -74,7 +74,6 @@ namespace PDF_Creator
                     }
                     klassenAsString += '\n';
                 }
-                
             }
 
             Windows.Storage.ApplicationDataContainer localSettings =
@@ -106,8 +105,7 @@ namespace PDF_Creator
                         klasse.AddStudent(names[1], names[0]);
                     }
                     AddKlasse(klasse);
-                }
-                
+                }                
             }
         }
     }
