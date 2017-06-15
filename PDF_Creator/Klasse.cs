@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PDF_Creator
 {
     public class Klasse
     {
-        struct StudentName
+        public struct StudentName
         {
             public string firstname;
             public string lastname;
@@ -45,6 +42,14 @@ namespace PDF_Creator
             set
             {
                 leiter = value;
+            }
+        }
+
+        public List<StudentName> Students
+        {
+            get
+            {
+                return students;
             }
         }
 

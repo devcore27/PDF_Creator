@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
@@ -11,10 +7,6 @@ using Windows.Foundation.Collections;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace PDF_Creator
@@ -79,15 +71,15 @@ namespace PDF_Creator
                 Window.Current.Activate();
             }
 
-            /*EnteredBackground += new EnteredBackgroundEventHandler(delegate (Object o, EnteredBackgroundEventArgs a)
+            EnteredBackground += new EnteredBackgroundEventHandler(delegate (Object o, EnteredBackgroundEventArgs a)
             {
-                DataManager.Instance.saveSettings();
+                DataManager.Instance.SaveSettings();
             });
 
             LeavingBackground += new LeavingBackgroundEventHandler(delegate (Object o, LeavingBackgroundEventArgs a)
             {
-                DataManager.Instance.loadSettings();
-            });*/
+                DataManager.Instance.LoadSettings();
+            });
 
             DataManager.Instance.Changed += new DataManager.OnKlassenChangedListener(delegate (Klasse klasse)
             {

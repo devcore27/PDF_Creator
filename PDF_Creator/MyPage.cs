@@ -1,12 +1,10 @@
 using System;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Printing;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Printing;
 using Windows.UI.Xaml.Shapes;
@@ -129,8 +127,6 @@ namespace PDF_Creator
             {
                 ShowCD();
             }
-
-
         }
 
         private async void ShowCD()
