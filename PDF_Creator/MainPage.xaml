@@ -37,7 +37,7 @@
 
         <RelativePanel Grid.Column="0" Grid.ColumnSpan="15" Background="DarkSlateBlue" VerticalAlignment="Stretch">
             <StackPanel Width="200" RelativePanel.AlignVerticalCenterWithPanel="True">
-                <ComboBox x:Name="COB_mode" Width="150" SelectionChanged="COB_mode_SelectionChanged" Foreground="White" BorderBrush="White"  >
+                <ComboBox x:Name="COB_mode" Width="150" SelectionChanged="COB_mode_SelectionChanged" Foreground="White" BorderBrush="White" IsEnabled="False">
                     <ComboBoxItem Content="Abschlussblatt" IsSelected="True"/>
                     <ComboBoxItem Content="Nur Klassenliste" />
                 </ComboBox>

@@ -83,6 +83,9 @@ namespace PDF_Creator
 
         public void LoadSettings()
         {
+            if (!DataManager.Instance.IsEmpty())
+                return;
+
             Windows.Storage.ApplicationDataContainer localSettings =
                 Windows.Storage.ApplicationData.Current.LocalSettings;
 
@@ -105,7 +108,7 @@ namespace PDF_Creator
                         klasse.AddStudent(names[1], names[0]);
                     }
                     AddKlasse(klasse);
-                }                
+                }
             }
         }
     }

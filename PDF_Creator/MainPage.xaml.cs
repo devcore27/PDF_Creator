@@ -34,23 +34,6 @@ namespace PDF_Creator
                         {
                             myPage.Width = Window.Current.Bounds.Width;
                             grid_main.Width = Window.Current.Bounds.Width;
-
-                            if (!DataManager.Instance.IsEmpty())
-                            {
-                                generateKlass(klass_border);
-                            }
-                            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-
-                            Object value = localSettings.Values["first_start"];
-
-                            if (value == null)
-                            {
-                                COB_mode.IsEnabled = false;
-                            }
-                            else
-                            {
-                                COB_mode.IsEnabled = true;
-                            }
                         }
                     );
                 },
@@ -240,7 +223,6 @@ namespace PDF_Creator
         private void BTN_open_Click(object sender, RoutedEventArgs e)
         {
             FileManager.ReadCSV();
-            localSettings.Values["first_start"] = "true";
         }
 
         public void KlassenChanged(Klasse klasse)
@@ -252,12 +234,14 @@ namespace PDF_Creator
                 klassenCombo.Items.Add(klasse.Name);
                 if (klassenCombo.SelectedIndex < 0)
                     klassenCombo.SelectedIndex = 0;
+                COB_mode.IsEnabled = true;
             }
             else
             {
                 BTN_print.Visibility = Visibility.Collapsed;
                 BTN_save.Visibility = Visibility.Collapsed;
                 klassenCombo.Items.Clear();
+                COB_mode.IsEnabled = false;
             }
         }
 
