@@ -60,9 +60,11 @@ namespace PDF_Creator
 
         public void AddStudent(string firstname, string lastname)
         {
-            StudentName studentName = new StudentName();
-            studentName.firstname = firstname;
-            studentName.lastname = lastname;
+            StudentName studentName = new StudentName()
+            {
+                firstname = firstname,
+                lastname = lastname
+            };
             students.Add(studentName);
         }
 

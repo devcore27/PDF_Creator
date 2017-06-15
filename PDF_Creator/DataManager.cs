@@ -5,7 +5,7 @@ namespace PDF_Creator
 {
     class DataManager
     {
-        private static string KLASSE_SETTINGS_KEY = "klasse_saved";
+        //private static string KLASSE_SETTINGS_KEY = "klasse_saved";
 
         public delegate void OnKlassenChangedListener(Klasse klasse);
 

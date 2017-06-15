@@ -12,9 +12,11 @@ namespace PDF_Creator
         public async static void ReadCSV()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            FileOpenPicker openPicker = new FileOpenPicker();
-            openPicker.ViewMode = PickerViewMode.List;
-            openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            FileOpenPicker openPicker = new FileOpenPicker()
+            {
+                ViewMode = PickerViewMode.List,
+                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
+            };
             openPicker.FileTypeFilter.Add(".csv");
 
             StorageFile file = await openPicker.PickSingleFileAsync();
@@ -61,9 +63,11 @@ namespace PDF_Creator
         }
 
         public async static void WriteCSV()
-        {   
-            FileSavePicker savePicker = new FileSavePicker();
-            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+        {
+            FileSavePicker savePicker = new FileSavePicker()
+            {
+                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
+            };
             savePicker.FileTypeChoices.Add("CSV-Datei", new List<string>() { ".csv" });            
             savePicker.SuggestedFileName = "klassenliste";
 

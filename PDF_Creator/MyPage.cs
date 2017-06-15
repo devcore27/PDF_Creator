@@ -54,7 +54,7 @@ namespace PDF_Creator
 
         private async void PrintButtonClick(object sender, RoutedEventArgs e)
         {
-            initPage();
+            InitPage();
 
             if (PrintManager.IsSupported())
             {
@@ -126,13 +126,13 @@ namespace PDF_Creator
                 printDoc.SetPreviewPage(e.PageNumber, grid);
             }catch
             {
-                showCD();
+                ShowCD();
             }
 
 
         }
 
-        private async void showCD()
+        private async void ShowCD()
         {
             ContentDialog noPrintingDialog = new ContentDialog()
             {
@@ -181,62 +181,76 @@ namespace PDF_Creator
 
         #region Init Page
 
-        private void initPage()
+        private void InitPage()
         {
             grid = new Grid();
             RelativePanel rp = new RelativePanel();
 
 
-            Image schoolImg = new Image();
-            schoolImg.Source = IMG_school.Source;
-            schoolImg.HorizontalAlignment = HorizontalAlignment.Stretch;
-            schoolImg.VerticalAlignment = VerticalAlignment.Stretch;
-
-            StackPanel logoStack = new StackPanel();
-            logoStack.Orientation = Orientation.Vertical;
+            Image schoolImg = new Image()
+            {
+                Source = IMG_school.Source,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch
+            };
+            StackPanel logoStack = new StackPanel()
+            {
+                Orientation = Orientation.Vertical
+            };
             //logoStack.HorizontalAlignment = HorizontalAlignment.Center;
             //logoStack.VerticalAlignment = VerticalAlignment.Center;
 
-            TextBlock congratsText = new TextBlock();
-            congratsText.Text = "Herzlichen Glückwunsch\nvom Lehrerkollegium\ndes Beruflichen Schulzentrums für Technik I";
-            congratsText.HorizontalAlignment = HorizontalAlignment.Center;
-            congratsText.TextAlignment = TextAlignment.Center;
-            congratsText.FontSize = 22;
-            congratsText.FontWeight = FontWeights.Bold;
-
-            Image logoImg = new Image();
-            logoImg.Source = IMG_logo.Source;
-            logoImg.Height = 150;
-
-            TextBlock zumText = new TextBlock();
-            zumText.Text = "zum";
-            zumText.FontSize = 26;
-            zumText.FontWeight = FontWeights.Bold;
-
-            TextBlock causeText = new TextBlock();
-            causeText.Text = "Berufsabschluss";
-            causeText.FontSize = 40;
-            causeText.HorizontalAlignment = HorizontalAlignment.Center;
-            causeText.FontWeight = FontWeights.Bold;
+            TextBlock congratsText = new TextBlock()
+            {
+                Text = "Herzlichen Glückwunsch\nvom Lehrerkollegium\ndes Beruflichen Schulzentrums für Technik I",
+                HorizontalAlignment = HorizontalAlignment.Center,
+                TextAlignment = TextAlignment.Center,
+                FontSize = 22,
+                FontWeight = FontWeights.Bold
+            };
+            Image logoImg = new Image()
+            {
+                Source = IMG_logo.Source,
+                Height = 150
+            };
+            TextBlock zumText = new TextBlock()
+            {
+                Text = "zum",
+                FontSize = 26,
+                FontWeight = FontWeights.Bold
+            };
+            TextBlock causeText = new TextBlock()
+            {
+                Text = "Berufsabschluss",
+                FontSize = 40,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                FontWeight = FontWeights.Bold
+            };
             logoStack.Children.Add(congratsText);
             logoStack.Children.Add(logoImg);
             logoStack.Children.Add(zumText);
             logoStack.Children.Add(causeText);
 
 
-            Grid klassenGrid = new Grid();
-            klassenGrid.HorizontalAlignment = HorizontalAlignment.Center;
-            klassenGrid.VerticalAlignment = VerticalAlignment.Center;
+            Grid klassenGrid = new Grid()
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
             for (int i = 1; i <= KLASSENGRID_COL_COUNT; ++i)
             {
-                ColumnDefinition columnDefinition = new ColumnDefinition();
-                columnDefinition.Width = new GridLength(KLASSENGRID_COL_WIDTH);
+                ColumnDefinition columnDefinition = new ColumnDefinition()
+                {
+                    Width = new GridLength(KLASSENGRID_COL_WIDTH)
+                };
                 klassenGrid.ColumnDefinitions.Add(columnDefinition);
             }
             for (int i = 1; i <= KLASSENGRID_ROW_COUNT; ++i)
             {
-                RowDefinition rowDefinition = new RowDefinition();
-                rowDefinition.Height = new GridLength(KLASSENGRID_ROW_HEIGHT);
+                RowDefinition rowDefinition = new RowDefinition()
+                {
+                    Height = new GridLength(KLASSENGRID_ROW_HEIGHT)
+                };
                 klassenGrid.RowDefinitions.Add(rowDefinition);
             }
             Klasse klasse = DataManager.Instance.KlasseAt(klassenCombo.SelectedIndex);
@@ -244,8 +258,10 @@ namespace PDF_Creator
             int cur = 0, col = 0, row = 0;
             while (cur < studentsCount)
             {
-                TextBlock txt = new TextBlock();
-                txt.FontSize = 14;
+                TextBlock txt = new TextBlock()
+                {
+                    FontSize = 14
+                };
                 if (col == 0 && row == 0)
                 {
                     txt.Text = "Klasse: " + klasse.Name;
@@ -273,9 +289,11 @@ namespace PDF_Creator
                 }
             }
 
-            Image klassenFoto = new Image();
-            klassenFoto.Source = IMG_class.Source;
-            klassenFoto.Height = GRID_ROW_HEIGHT;
+            Image klassenFoto = new Image()
+            {
+                Source = IMG_class.Source,
+                Height = GRID_ROW_HEIGHT
+            };
             //klassenFoto.HorizontalAlignment = HorizontalAlignment.Center;
             //klassenFoto.VerticalAlignment = VerticalAlignment.Center;
 

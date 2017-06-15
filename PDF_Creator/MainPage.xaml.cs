@@ -57,23 +57,29 @@ namespace PDF_Creator
             if (klassenGrid.ColumnDefinitions.Count == 0)
                 for (int i = 1; i <= KLASSENGRID_COL_COUNT; ++i)
                 {
-                    ColumnDefinition columnDefinition = new ColumnDefinition();
-                    columnDefinition.Width = new GridLength(KLASSENGRID_COL_WIDTH);
+                    ColumnDefinition columnDefinition = new ColumnDefinition()
+                    {
+                        Width = new GridLength(KLASSENGRID_COL_WIDTH)
+                    };
                     klassenGrid.ColumnDefinitions.Add(columnDefinition);
                 }
             if (klassenGrid.RowDefinitions.Count == 0)
                 for (int i = 1; i <= KLASSENGRID_ROW_COUNT; ++i)
                 {
-                    RowDefinition rowDefinition = new RowDefinition();
-                    rowDefinition.Height = new GridLength(KLASSENGRID_ROW_HEIGHT);
+                    RowDefinition rowDefinition = new RowDefinition()
+                    {
+                        Height = new GridLength(KLASSENGRID_ROW_HEIGHT)
+                    };
                     klassenGrid.RowDefinitions.Add(rowDefinition);
                 }
             int studentsCount = klasse.StudentsCount();
             int cur = 0, col = 0, row = 0;
             while (cur < studentsCount)
             {
-                TextBlock txt = new TextBlock();
-                txt.FontSize = 12;
+                TextBlock txt = new TextBlock()
+                {
+                    FontSize = 12
+                };
                 if (col == 0 && row == 0)
                 {
                     txt.Text = "Klasse: " + klasse.Name;
@@ -104,9 +110,11 @@ namespace PDF_Creator
 
         private async void BTN_change_school_Click(object sender, RoutedEventArgs e)
         {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+            var picker = new Windows.Storage.Pickers.FileOpenPicker()
+            {
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary
+            };
             picker.FileTypeFilter.Add(".jpg");
             picker.FileTypeFilter.Add(".jpeg");
             picker.FileTypeFilter.Add(".png");
@@ -127,9 +135,11 @@ namespace PDF_Creator
 
         private async void BTN_school_source_Click(object sender, RoutedEventArgs e)
         {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+            var picker = new Windows.Storage.Pickers.FileOpenPicker()
+            {
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary,
+            };
             picker.FileTypeFilter.Add(".jpg");
             picker.FileTypeFilter.Add(".jpeg");
             picker.FileTypeFilter.Add(".png");
