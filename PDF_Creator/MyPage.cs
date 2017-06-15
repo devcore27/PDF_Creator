@@ -124,7 +124,8 @@ namespace PDF_Creator
             try
             {
                 printDoc.SetPreviewPage(e.PageNumber, grid);
-            }catch
+            }
+            catch
             {
                 ShowCD();
             }
@@ -221,7 +222,7 @@ namespace PDF_Creator
             };
             TextBlock causeText = new TextBlock()
             {
-                Text = "Berufsabschluss",
+                Text = TBL_logo_title.Text,
                 FontSize = 40,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 FontWeight = FontWeights.Bold
@@ -313,15 +314,21 @@ namespace PDF_Creator
             schoolImg.SetValue(RelativePanel.AlignLeftWithProperty, klassenGrid);
             schoolImg.SetValue(RelativePanel.AlignRightWithProperty, klassenGrid);
             schoolImg.VerticalAlignment = VerticalAlignment.Top;
-            schoolImg.Margin = new Thickness(0,0,30,0);
+            schoolImg.Margin = new Thickness(0, 0, 30, 0);
 
 
             logoStack.SetValue(RelativePanel.AlignTopWithPanelProperty, true);
             logoStack.SetValue(RelativePanel.AlignRightWithPanelProperty, true);
-            logoStack.SetValue(RelativePanel.AlignLeftWithProperty, klassenFoto);
-            logoStack.SetValue(RelativePanel.AlignRightWithProperty, klassenFoto);
-            logoStack.Margin = new Thickness(0);
 
+            logoStack.Margin = new Thickness(0);
+            if (IMG_class.Visibility == Visibility.Collapsed)
+            {
+            }
+            else
+            {
+                logoStack.SetValue(RelativePanel.AlignLeftWithProperty, klassenFoto);
+                logoStack.SetValue(RelativePanel.AlignRightWithProperty, klassenFoto);
+            }
 
             klassenGrid.SetValue(RelativePanel.AlignBottomWithPanelProperty, true);
             klassenGrid.SetValue(RelativePanel.AlignLeftWithPanelProperty, true);
