@@ -9,7 +9,9 @@ using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.Threading;
+using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Input;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -30,10 +32,11 @@ namespace PDF_Creator
     public sealed partial class MainPage : Page
     {
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
+        
         public MainPage()
         {
-            this.InitializeComponent();         
+            this.InitializeComponent();
+
             TimeSpan tperiod = TimeSpan.FromSeconds(0.1);
             ThreadPoolTimer tTimer = ThreadPoolTimer.CreatePeriodicTimer(
                 async (source) =>
@@ -45,9 +48,9 @@ namespace PDF_Creator
                             myPage.Width = Window.Current.Bounds.Width;
                             grid_main.Width = Window.Current.Bounds.Width;
                             Klasse klasse = DataManager.Instance.Klasse;
-                            if(klasse != null)
+                            if (klasse != null)
                             {
-                                generateKlass();
+                                generateKlass(klass_border);
                             }
                         }
                         );
@@ -56,7 +59,7 @@ namespace PDF_Creator
         }
 
 
-        private void generateKlass()
+        private void generateKlass(Border place)
         {
             Grid klassenGrid = new Grid();
             klassenGrid.HorizontalAlignment = HorizontalAlignment.Center;
@@ -106,7 +109,59 @@ namespace PDF_Creator
                     col++;
                 }
             }
-            klass_border.Child = klassenGrid;
+            place.Child = klassenGrid;
+        }
+        private void generateKlass(Grid place)
+        {
+            Grid klassenGrid = new Grid();
+            klassenGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            klassenGrid.VerticalAlignment = VerticalAlignment.Center;
+            for (int i = 1; i <= KLASSENGRID_COL_COUNT; ++i)
+            {
+                ColumnDefinition columnDefinition = new ColumnDefinition();
+                columnDefinition.Width = new GridLength(KLASSENGRID_COL_WIDTH);
+                klassenGrid.ColumnDefinitions.Add(columnDefinition);
+            }
+            for (int i = 1; i <= KLASSENGRID_ROW_COUNT; ++i)
+            {
+                RowDefinition rowDefinition = new RowDefinition();
+                rowDefinition.Height = new GridLength(KLASSENGRID_ROW_HEIGHT);
+                klassenGrid.RowDefinitions.Add(rowDefinition);
+            }
+            Klasse klasse = DataManager.Instance.Klasse;
+            int studentsCount = klasse.Students.Count;
+            int cur = 0, col = 0, row = 0;
+            while (cur < studentsCount)
+            {
+                TextBlock txt = new TextBlock();
+                txt.FontSize = 12;
+                if (col == 0 && row == 0)
+                {
+                    txt.Text = "Klasse: " + klasse.Name;
+                    txt.FontWeight = FontWeights.Bold;
+
+                }
+                else if (col == 1 && row == 0)
+                {
+                    txt.Text = "Klassenleiter: " + klasse.Leiter;
+                    txt.FontWeight = FontWeights.Bold;
+                }
+                else if (!(col == 2 && row == 0))
+                {
+                    txt.Text = klasse.Students[cur++];
+                }
+
+                klassenGrid.Children.Add(txt);
+                Grid.SetColumn(txt, col);
+                Grid.SetRow(txt, row);
+
+                if (++row == KLASSENGRID_ROW_COUNT)
+                {
+                    row = 0;
+                    col++;
+                }
+            }
+            place.Children.Add(klassenGrid);
         }
 
         private async void BTN_change_school_Click(object sender, RoutedEventArgs e)
@@ -126,6 +181,7 @@ namespace PDF_Creator
                 BitmapImage img = new BitmapImage();
                 img = await LoadImage(file);
                 IMG_class.Source = img;
+                IMG_class.Visibility = Visibility.Visible;
             }
             else
             {
@@ -166,11 +222,11 @@ namespace PDF_Creator
 
         }
 
-        
+
         private void BTN_open_Click(object sender, RoutedEventArgs e)
 
         {
-            FileManager.readCSV();            
+            FileManager.readCSV();
         }
 
         public void klasse_Changed(Klasse klasse)
@@ -178,13 +234,51 @@ namespace PDF_Creator
             if (klasse != null)
             {
                 BTN_print.Visibility = Visibility.Visible;
-                BTN_save.Visibility = Visibility.Visible;
+                //BTN_save.Visibility = Visibility.Visible;
             }
             else
             {
                 BTN_print.Visibility = Visibility.Collapsed;
-                BTN_save.Visibility = Visibility.Collapsed;
+                //BTN_save.Visibility = Visibility.Collapsed;
             }
         }
+
+        Grid g = new Grid();
+
+        private void COB_mode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (COB_mode.SelectedIndex == 1)
+            {
+                GRID_prev.Visibility = Visibility.Collapsed;
+                Grid.SetColumn(g, 2);
+                Grid.SetColumnSpan(g, 11);
+                Grid.SetRow(g, 2);
+                Grid.SetRowSpan(g, 3);
+                g.BorderBrush = new SolidColorBrush(Colors.Black);
+                g.BorderThickness = new Thickness(2);
+                generateKlass(g);
+                grid_main.Children.Add(g);
+                g.Visibility = Visibility.Visible;
+            }
+            else if (COB_mode.SelectedIndex == 0)
+            {
+                g.Visibility = Visibility.Collapsed;
+                grid_main.Children.Remove(g);
+                g.Children.Clear();
+                if (GRID_prev != null)
+                {
+                    GRID_prev.Visibility = Visibility.Visible;
+                }
+
+            }
+        }
+     
     }
+
+
+
+
+
 }
+
