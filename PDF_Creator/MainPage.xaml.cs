@@ -162,6 +162,7 @@ namespace PDF_Creator
 
         private async void BTN_change_school_Click(object sender, RoutedEventArgs e)
         {
+            IMG_class.Visibility = Visibility.Visible;
             var picker = new Windows.Storage.Pickers.FileOpenPicker()
             {
                 ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
