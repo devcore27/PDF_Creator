@@ -231,7 +231,7 @@ namespace PDF_Creator
             if (!DataManager.Instance.IsEmpty())
             {
                 BTN_print.Visibility = Visibility.Visible;
-                BTN_save.Visibility = Visibility.Visible;
+                //BTN_save.Visibility = Visibility.Visible;
                 klassenCombo.Items.Add(klasse.Name);
                 if (klassenCombo.SelectedIndex < 0)
                     klassenCombo.SelectedIndex = 0;
@@ -240,7 +240,7 @@ namespace PDF_Creator
             else
             {
                 BTN_print.Visibility = Visibility.Collapsed;
-                BTN_save.Visibility = Visibility.Collapsed;
+               //BTN_save.Visibility = Visibility.Collapsed;
                 klassenCombo.Items.Clear();
                 COB_mode.IsEnabled = false;
             }

@@ -201,7 +201,7 @@ namespace PDF_Creator
 
                 TextBlock congratsText = new TextBlock()
                 {
-                    Text = "Herzlichen Glückwunsch\nvom Lehrerkollegium\ndes Beruflichen Schulzentrums für Technik I",
+                    Text = TBL_logo_subjekt.Text,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     TextAlignment = TextAlignment.Center,
                     FontSize = 22,
@@ -214,7 +214,7 @@ namespace PDF_Creator
                 };
                 TextBlock zumText = new TextBlock()
                 {
-                    Text = "zum",
+                    Text = TBL_logo_articel.Text,
                     FontSize = 26,
                     FontWeight = FontWeights.Bold
                 };
